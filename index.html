@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pannello comandi · Copertura media</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf1f2;--surf:#fbfcfc;--ink:#19272e;--mute:#5c6d75;--line:#cfd9dc;--pri:#2f5d62;--priink:#fff;--gold:#b87a0e;--goldbg:#f6ecd7;--red:#a3412f;--ok:#2d6a42;--okbg:#dff0e4;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10191d;--surf:#18262c;--ink:#e6eef0;--mute:#93a6ad;--line:#2b3d44;--pri:#6fb3b8;--priink:#0d1a1d;--gold:#e0a43c;--goldbg:#33291a;--red:#e08a77;--ok:#7bc796;--okbg:#18301f;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10191d;--surf:#18262c;--ink:#e6eef0;--mute:#93a6ad;--line:#2b3d44;--pri:#6fb3b8;--priink:#0d1a1d;--gold:#e0a43c;--goldbg:#33291a;--red:#e08a77;--ok:#7bc796;--okbg:#18301f;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.5 "Public Sans",system-ui,sans-serif}
+header{padding:20px 18px 0;max-width:760px;margin:0 auto}
+h1{font:700 26px/1.15 Bitter,Georgia,serif;margin:0 0 4px}
+header p{margin:0;color:var(--mute);font-size:14px}
+.ridge{display:block;width:100%;height:56px;margin-top:10px}
+.ridge polyline{fill:none;stroke:var(--pri);stroke-width:2;stroke-linejoin:round}
+.ridge path{fill:var(--pri);opacity:.12}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;border-bottom:1px solid var(--line)}
+nav div{max-width:760px;margin:0 auto;display:flex;gap:4px;padding:8px 14px}
+nav button{flex:1;border:0;background:none;color:var(--mute);font:600 15px "Public Sans",sans-serif;padding:10px 6px;border-radius:8px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--pri);color:var(--priink)}
+button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+main{max-width:760px;margin:0 auto;padding:16px 14px 40px}
+.note{background:var(--goldbg);border-left:4px solid var(--gold);padding:10px 12px;border-radius:6px;font-size:14px;margin-bottom:18px}
+h2{font:700 19px/1.2 Bitter,Georgia,serif;margin:22px 0 10px}
+.row{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.row b{font-weight:600}
+.bar{height:8px;background:var(--line);border-radius:4px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--pri)}
+.meta{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:var(--mute);margin-top:6px}
+.gap{border-left:4px solid var(--gold)}
+.gap small{display:block;color:var(--mute);margin-top:2px}
+.kind{font-size:13px;color:var(--mute);margin-bottom:4px}
+textarea{width:100%;min-height:120px;resize:vertical;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px;font:400 15px/1.5 "Public Sans",sans-serif;margin:8px 0}
+.act{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.act button{border:1px solid var(--line);background:var(--surf);color:var(--ink);font:600 14px "Public Sans",sans-serif;padding:9px 14px;border-radius:8px;cursor:pointer}
+.act .go{background:var(--pri);color:var(--priink);border-color:var(--pri)}
+.act .no{color:var(--red)}
+.tag{font-size:13px;font-weight:600;padding:3px 9px;border-radius:12px;background:var(--line);color:var(--mute)}
+.tag.ok{background:var(--okbg);color:var(--ok)}
+.tag.off{color:var(--red)}
+.src{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.src small{display:block;color:var(--mute)}
+.src input{width:22px;height:22px;accent-color:var(--pri);flex:none}
+nav div{overflow-x:auto}
+nav button{flex:0 0 auto;font-size:14px;padding:10px 14px}
+.f{width:100%;margin-top:8px;background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:10px;font:400 15px 'Public Sans',sans-serif}
+.bar i.pos{background:var(--ok)}
+input[type=range]{accent-color:var(--pri)}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.kpis .row{margin:0}
+.kpis strong{display:block;font:700 24px/1.1 Bitter,Georgia,serif;color:var(--pri)}
+.kpis span{font-size:13px;color:var(--mute)}
+.br{display:grid;grid-template-columns:84px 1fr 62px;gap:8px;align-items:center;margin-top:8px;font-size:14px}
+.br .bar{margin:0}
+.br b{text-align:right}
+.bar i.hl{background:var(--gold)}
+.bar i.neg{background:var(--red)}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:no-preference){.bar i{transition:width .4s}}
+</style>
+</head>
+<body>
+<header>
+<h1>Pannello comandi</h1>
+<p>Temi, bozze e fonti per la copertura media in provincia di Cuneo</p>
+<svg class="ridge" viewBox="0 0 400 56" preserveAspectRatio="none" aria-hidden="true"><path d="M0 56 L0 38 L40 22 L70 34 L120 8 L160 30 L210 16 L250 36 L300 12 L350 28 L400 18 L400 56Z"/><polyline points="0,38 40,22 70,34 120,8 160,30 210,16 250,36 300,12 350,28 400,18"/></svg>
+</header>
+<nav><div role="tablist">
+<button role="tab" data-t="temi" aria-selected="true">Temi</button>
+<button role="tab" data-t="bozze" aria-selected="false">Bozze <span id="cnt"></span></button>
+<button role='tab' data-t='pubblica' aria-selected='false'>Pubblica</button>
+<button role='tab' data-t='rassegna' aria-selected='false'>Rassegna stampa</button>
+<button role='tab' data-t='futuro' aria-selected='false'>Montagna 2035</button>
+<button role="tab" data-t="fonti" aria-selected="false">Fonti</button>
+</div></nav>
+<main>
+<div class="note">Dati di esempio: serve a provare l’impostazione. Il collegamento alle fonti reali e alla pubblicazione si aggiunge nel passo successivo.</div>
+
+<section id="temi">
+<div class='row'><b>Brief del giorno</b><div class='act' style='margin-top:8px'><button class='go' id='fau'>Aggiorna dal sito</button></div><input class='f' type='password' id='fpw' placeholder='Password del brief (solo la prima volta)' aria-label='Password del brief' autocomplete='off'><input class='f' type='file' id='fbr' aria-label='Carica il brief del giorno'><textarea id='fbp' placeholder='Oppure incolla qui il contenuto di brief.json' aria-label='Incolla il brief' style='min-height:70px'></textarea><div class='act'><button id='fbb'>Carica testo incollato</button></div><div class='meta'><span id='fbm'>Il brief si aggiorna da solo. Se serve, puoi anche caricare il file a mano.</span></div></div>
+<h2>Dove c’è più attenzione oggi</h2>
+<div id="hot"></div>
+<h2>Temi poco coperti, con bisogno reale</h2>
+<div id="gaps"></div>
+<h2>Dal territorio, dalle tue note</h2>
+<div id='ter'><div class='row'>Nessuna nota ancora. Scrivile come Issue nel tuo archivio GitHub.</div></div>
+</section>
+
+<section id="bozze" hidden>
+<h2>Bozze da approvare</h2>
+<div id="drafts"></div>
+</section>
+
+<section id='pubblica' hidden>
+<h2>Pubblica</h2>
+<div class='note'>Versione semiautomatica: il pannello prepara il pacchetto, tu lo controlli e lo pubblichi dalla tua Pagina e dalla tua posta. L’invio automatico si aggiunge dopo.</div>
+<div class='row'><b>Immagine con la tua grafica fissa</b>
+<svg id='pcard' viewBox='0 0 400 400' style='width:100%;max-width:340px;display:block;margin:8px auto' role='img' aria-label='Anteprima dell’immagine per i social'></svg>
+<input class='f' id='pti' maxlength='90' aria-label='Titolo sull’immagine' placeholder='Titolo sull’immagine'>
+<input class='f' id='pnm' maxlength='40' aria-label='Nome' placeholder='Nome'>
+<input class='f' id='prl' maxlength='50' aria-label='Ruolo' placeholder='Ruolo'>
+</div>
+<h2>Pacchetto pronto</h2>
+<div class='row'><b>Testo per Facebook</b><textarea id='ptx' aria-label='Testo per Facebook'></textarea><div class='act'><button id='pcpt'>Copia testo</button><button id='psvi'>Salva immagine</button></div></div>
+<div class='row'><b>Articolo per le testate</b><div class='meta'><span id='pwc'></span></div><textarea id='par' style='min-height:280px' aria-label='Articolo'></textarea><div class='act'><button id='pcpa'>Copia articolo</button><button id='psva'>Salva articolo</button></div></div>
+<div class='row'><b>Indirizzi delle testate</b><div id='pem'></div><input class='f' id='pad' readonly aria-label='Indirizzi selezionati' placeholder='Qui compaiono gli indirizzi selezionati'><div class='act' style='margin-top:8px'><button id='pcpe'>Copia indirizzi selezionati</button></div></div>
+<div class='meta'><span id='pms'></span></div>
+<h2>Social</h2><div id='pnw'></div>
+<h2>Testate: articolo di circa 300 parole</h2><div id='pnp'></div>
+<div class='row'><div id='psum'></div><div class='act' style='margin-top:8px'><button class='go' id='pgo'>Autorizza la pubblicazione</button></div><div class='meta'><span id='pst'></span></div></div>
+</section>
+
+<section id='rassegna' hidden>
+<h2>Rassegna stampa</h2>
+<div class='note'>Titoli delle ultime 48 ore dalle testate che hai scelto. Il testo resta sui siti: tocca un titolo per aprire l’articolo. In giallo i titoli su montagna e valli.</div>
+<input class='f' id='rsq' placeholder='Cerca una parola, per esempio sanità' aria-label='Cerca nella rassegna'>
+<div id='rsl'><div class='row'>Carica il brief del giorno nella scheda Temi per vedere la rassegna.</div></div>
+</section>
+
+<section id='dati' hidden>
+<h2>Dati salienti della provincia</h2>
+<div class='note'>Dati ISTAT raccolti il 10 novembre 2026 da fonti locali e statistiche pubbliche. Il dato al 1° gennaio 2026 viene da una fonte secondaria: va confrontato con la pubblicazione ISTAT.</div>
+<div class='kpis' id='kpis'></div>
+<div class='row'><b>Residenti al 1° gennaio</b><div id='c1'></div><div class='meta'><span>La popolazione è sostanzialmente stabile</span></div></div>
+<div class='row'><b>Età media al 1° gennaio 2025</b><div id='c2'></div><div class='meta'><span>L’asse parte da 40 anni</span></div></div>
+<div class='row'><b>Nati nel 2024, variazione sul 2023</b><div id='c3'></div><div class='meta'><span>Calo in tutti e tre i territori, più forte nella Granda</span></div></div>
+<div class='row'><b>Figli per donna in Italia</b><div id='c4'></div><div class='meta'><span>Dato nazionale: quello provinciale non è ancora in questo pannello</span></div></div>
+</section>
+
+<section id='futuro' hidden>
+<h2>Montagna 2035</h2>
+<div class='note'>Scenari per le Valli Maira e Grana (18 comuni dell’area progetto), costruiti sul dato ISTAT 2011–2020 riportato nel rapporto della Regione Piemonte. Sono ipotesi semplici, non previsioni: la base va aggiornata con i dati più recenti.</div>
+<div class='row'><b>Anno di arrivo: <span id='yr'>2035</span></b><input type='range' id='yrs' aria-label='Anno di arrivo' min='2025' max='2040' step='1' value='2035' style='width:100%;margin-top:8px'><div id='fres'></div></div>
+<div class='row'><b>Residenti nelle valli, tre scenari</b><svg id='fch' viewBox='0 0 320 150' style='width:100%;height:auto;margin-top:6px' role='img' aria-label='Andamento dei residenti nei tre scenari'></svg><div class='meta'><span>Dal 2020 al 2040. Base 2020: 13.209 residenti</span></div></div>
+<div class='row'><b>Residenti nelle 13 Unioni montane (31 dicembre 2024)</b><div id='fu'></div><div class='meta'><span>In totale 163.562 abitanti, circa il 28% della provincia. Valli Tanaro e Casotto ha 3.107 abitanti, vicina alla soglia minima di 3.000. Fonte: studio della Provincia di Cuneo, giugno 2025</span></div></div>
+<div class='row'><b>Titolo suggerito</b><p id='ftit' style='margin:6px 0 0'></p></div>
+<div class='row'><b>Variazione dei residenti 2011–2020 nei comuni</b><div id='fc2'></div><div class='meta'><span>In alto la valle perde, in basso cresce. Numeri piccoli: Marmora passa da 74 a 53 residenti</span></div></div>
+</section>
+
+<section id="fonti" hidden>
+<h2>Fonti monitorate</h2>
+<div id="srcs"></div>
+</section>
+</main>
+
+<script>
+var D={
+hot:[
+{t:"Sanità territoriale e liste d’attesa",s:82,d:"+14% in 7 giorni"},
+{t:"Frane e viabilità sulle strade provinciali",s:71,d:"+9% in 7 giorni"},
+{t:"Costo dell’energia per le famiglie",s:64,d:"+3% in 7 giorni"},
+{t:"Iscrizioni scolastiche in calo",s:48,d:"+11% in 7 giorni"}],
+gaps:[
+{t:"Medici di base nei comuni montani",n:"Poche notizie, molte segnalazioni dei cittadini"},
+{t:"Bandi per i piccoli comuni in scadenza",n:"Pochi ne parlano, la scadenza è vicina"},
+{t:"Case vuote e rigenerazione dei borghi",n:"Tema ignorato dalle testate, legato a spopolamento e scuole"}],
+drafts:[
+{id:"a1",k:"Articolo per testata locale",x:"Il medico che non c’è: cosa significa la sanità di prossimità nei comuni di montagna.\n\nQuando un ambulatorio resta chiuso, a perdere non è solo chi deve curarsi: è l’intero paese. Partiamo da un dato, da una storia vera e da una proposta concreta per i comuni delle aree interne."},
+{id:"b2",k:"Comunicato stampa",x:"Aree interne e viabilità: servono tempi certi per gli interventi sulle strade colpite dalle frane. Il comunicato riporta le richieste dei comuni e le scadenze da rispettare."},
+{id:"c3",k:"Post per i social",x:"Una strada chiusa in montagna non è solo un disagio: è una scuola più lontana, un negozio che perde clienti, un’ambulanza che arriva dopo. Di questo parliamo, con i dati alla mano."}],
+src:[
+{id:"s1a",t:"TargatoCN",n:"Articoli e commenti"},
+{id:"s1b",t:"Cuneodice",n:"Articoli e commenti"},
+{id:"s1c",t:"La Stampa Cuneo",n:"Articoli e commenti"},
+{id:"s1d",t:"La Guida",n:"Articoli e commenti"},
+{id:"s1e",t:"Cuneo7",n:"Articoli e commenti"},
+{id:"s2",t:"Comunicati di Comuni, Unioni montane e Provincia",n:"Atti, bandi e scadenze"},
+{id:"s3",t:"Avvisi per parole chiave",n:"Cuneo, Granda, aree interne, i comuni che interessano"},
+{id:"s4",t:"Pagine social selezionate",n:"Controllo manuale di poche pagine chiave"}]
+};
+var S={};
+try{S=JSON.parse(localStorage.getItem("pc")||"{}")}catch(e){S={}}
+S.st=S.st||{};S.tx=S.tx||{};S.src=S.src||{};
+function save(){try{localStorage.setItem("pc",JSON.stringify(S))}catch(e){}}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function $(i){return document.getElementById(i)}
+
+function render(){
+$("hot").innerHTML=D.hot.map(function(h){return '<div class="row"><b>'+h.t+'</b><div class="bar"><i style="width:'+h.s+'%"></i></div><div class="meta"><span>Attenzione '+h.s+' su 100</span><span>'+h.d+'</span></div></div>'}).join("");
+$("gaps").innerHTML=D.gaps.map(function(g){return '<div class="row gap"><b>'+g.t+'</b><small>'+g.n+'</small></div>'}).join("");
+$("drafts").innerHTML=D.drafts.map(function(d){
+var st=S.st[d.id]||"new",tx=S.tx[d.id]!=null?S.tx[d.id]:d.x;
+var tag=st=="ok"?'<span class="tag ok">Approvata, pronta per la pubblicazione</span>':st=="no"?'<span class="tag off">Scartata</span>':'<span class="tag">Da approvare</span>';
+var btn=st=="new"?'<button class="go" data-a="ok" data-i="'+d.id+'">Approva</button><button class="no" data-a="no" data-i="'+d.id+'">Scarta</button>':'<button data-a="new" data-i="'+d.id+'">Ripristina</button>';
+return '<div class="row"><div class="kind">'+d.k+'</div>'+tag+'<textarea data-i="'+d.id+'" aria-label="Testo della bozza">'+esc(tx)+'</textarea><div class="act">'+btn+'</div></div>'}).join("");
+$("srcs").innerHTML=D.src.map(function(s){var on=S.src[s.id]!==false;return '<label class="row src"><span><b>'+s.t+'</b><small>'+s.n+'</small></span><input type="checkbox" data-s="'+s.id+'"'+(on?" checked":"")+'></label>'}).join("");
+var n=D.drafts.filter(function(d){return (S.st[d.id]||"new")=="new"}).length;
+$("cnt").textContent=n?"("+n+")":"";
+}
+document.addEventListener("click",function(e){
+var b=e.target.closest("button");if(!b)return;
+if(b.dataset.t){document.querySelectorAll("nav button").forEach(function(x){x.setAttribute("aria-selected",x===b)});
+["temi","bozze","pubblica","rassegna","dati","futuro","fonti"].forEach(function(id){$(id).hidden=id!==b.dataset.t});window.scrollTo(0,0);return}
+if(b.dataset.a){S.st[b.dataset.i]=b.dataset.a;save();render()}
+});
+document.addEventListener("input",function(e){if(e.target.dataset.i&&e.target.tagName=="TEXTAREA"){S.tx[e.target.dataset.i]=e.target.value;save()}});
+document.addEventListener("change",function(e){if(e.target.dataset.s){S.src[e.target.dataset.s]=e.target.checked;save()}});
+render();
+function it(v,d){return v.toLocaleString('it-IT',{minimumFractionDigits:d||0,maximumFractionDigits:d||0})}
+function bars(id,items,min,max,fmt){document.getElementById(id).innerHTML=items.map(function(i){var w=Math.max(2,(i.v-min)/(max-min)*100);return '<div class="br"><span>'+i.l+'</span><div class="bar"><i class="'+(i.c||'')+'" style="width:'+w+'%"></i></div><b>'+fmt(i.v)+'</b></div>'}).join('')}
+document.getElementById('kpis').innerHTML=[{n:'582.109',l:'residenti al 1° gennaio 2026'},{n:'199',l:'anziani ogni 100 under 15 (gennaio 2024)'},{n:'10,8%',l:'stranieri residenti (fine 2023)'},{n:'3.800',l:'nati nel 2024'}].map(function(k){return '<div class="row"><strong>'+k.n+'</strong><span>'+k.l+'</span></div>'}).join('');
+bars('c1',[{l:'2024',v:582194},{l:'2025',v:581700},{l:'2026',v:582109}],0,600000,function(v){return it(v)});
+bars('c2',[{l:'Cuneo',v:46.8,c:'hl'},{l:'Italia',v:46.8},{l:'Piemonte',v:48.1},{l:'Biella',v:50.3}],40,52,function(v){return it(v,1)});
+bars('c3',[{l:'Cuneo',v:3.3,c:'neg'},{l:'Piemonte',v:2.0,c:'neg'},{l:'Italia',v:2.6,c:'neg'}],0,4,function(v){return '−'+it(v,1)+'%'});
+bars('c4',[{l:'2022',v:1.24},{l:'2023',v:1.20},{l:'2024',v:1.18,c:'hl'}],0,1.5,function(v){return it(v,2)});
+var P0=13209,Y0=2020,RT={t:-0.003967,a:-0.008,i:0.002};
+function pp(r,y){return P0*Math.exp(r*(y-Y0))}
+function sg(v,d){return (v>0?'+':v<0?'\u2212':'')+it(Math.abs(v),d)}
+function drawF(){
+var y=+document.getElementById('yrs').value;
+document.getElementById('yr').textContent=y;
+var sc=[['Tendenziale: ritmo 2011\u20132020','t','pri'],['Accelerato: il doppio','a','red'],['Inversione: lieve crescita','i','ok']];
+document.getElementById('fres').innerHTML=sc.map(function(c){var v=pp(RT[c[1]],y);return `<div class='meta'><span>${c[0]}</span><b style='color:var(--${c[2]})'>${it(Math.round(v/10)*10)} (${sg((v/P0-1)*100,1)}%)</b></div>`}).join('');
+var W=320,H=150,L=44,B=18,T=8,Rr=8,x0=2020,x1=2040,vals=[];
+sc.forEach(function(c){vals.push(pp(RT[c[1]],x0),pp(RT[c[1]],x1))});
+var mn=Math.floor(Math.min.apply(null,vals)/500)*500,mx=Math.ceil(Math.max.apply(null,vals)/500)*500;
+function X(v){return L+(v-x0)/(x1-x0)*(W-L-Rr)}
+function Y(v){return T+(1-(v-mn)/(mx-mn))*(H-T-B)}
+var g='';
+sc.forEach(function(c){var pts=[];for(var a=x0;a<=x1;a++)pts.push(X(a).toFixed(1)+','+Y(pp(RT[c[1]],a)).toFixed(1));g+=`<polyline points='${pts.join(' ')}' style='fill:none;stroke:var(--${c[2]});stroke-width:2'/>`});
+g+=`<line x1='${X(y)}' x2='${X(y)}' y1='${T}' y2='${H-B}' style='stroke:var(--mute);stroke-dasharray:3 3'/>`;
+g+=`<text x='2' y='${T+8}' style='fill:var(--mute);font-size:10px'>${it(mx)}</text><text x='2' y='${H-B}' style='fill:var(--mute);font-size:10px'>${it(mn)}</text><text x='${L}' y='${H-3}' style='fill:var(--mute);font-size:10px'>2020</text><text x='${W-Rr-24}' y='${H-3}' style='fill:var(--mute);font-size:10px'>2040</text>`;
+document.getElementById('fch').innerHTML=g;
+var lost=Math.round((P0-pp(RT.t,y))/10)*10;
+document.getElementById('ftit').textContent='Se nulla cambia, entro il '+y+' le Valli Maira e Grana perderanno circa '+it(lost)+' residenti rispetto al 2020: \u00e8 il dato da cui partire per decidere dove investire.';
+}
+document.getElementById('yrs').addEventListener('input',drawF);
+bars('fu',[{l:'Valle Stura',v:19839},{l:'Alpi del Mare',v:19677},{l:'Valle Grana',v:17982},{l:'Valle Varaita',v:17646},{l:'Alta Langa',v:17512},{l:'Barge-Bagnolo',v:13230},{l:'Mongia-Bormida',v:12848},{l:'Mondolè',v:12316},{l:'Valle Maira',v:11429},{l:'Alpi Marittime',v:7983},{l:'Monviso',v:6131},{l:'Alta Val Tanaro',v:3862},{l:'Tanaro-Casotto',v:3107,c:'hl'}],0,20000,function(v){return it(v)});
+var NW=[{id:'fb',n:'Facebook',h:'Pagina; immagine 1200×630 o quadrata'},{id:'ig',n:'Instagram',h:'Account professionale; immagine quadrata 1080×1080'},{id:'li',n:'LinkedIn',h:'Profilo personale; testo più lungo e formale'},{id:'x',n:'X',h:'Testo breve, massimo 280 caratteri'},{id:'th',n:'Threads',h:'Testo breve e conversazionale'}];
+var NP=['TargatoCN','Cuneodice','La Stampa Cuneo','La Guida','Cuneo7'];
+S.pub=S.pub||{};var P=S.pub;P.nw=P.nw||{};P.np=P.np||{};
+if(P.ti==null)P.ti='Aree interne: il futuro si decide adesso';
+if(P.nm==null)P.nm='Nome';
+if(P.rl==null)P.rl='Ruolo';
+function wrap(t,n){var w=t.split(' '),l=[],c='';w.forEach(function(x){if((c+' '+x).trim().length>n){l.push(c);c=x}else c=(c+' '+x).trim()});if(c)l.push(c);return l}
+function renderP(){
+var ls=wrap(P.ti,20).slice(0,5);
+var g=`<rect width='400' height='400' fill='#12303a'/><rect x='24' y='24' width='352' height='352' fill='none' stroke='#c9a24a' stroke-width='1.5'/><rect x='24' y='24' width='6' height='352' fill='#c9a24a'/>`;
+ls.forEach(function(l,i){g+=`<text x='52' y='${110+i*40}' fill='#f4efe3' font-family='Bitter,Georgia,serif' font-size='30' font-weight='700'>${esc(l)}</text>`});
+g+=`<line x1='52' x2='140' y1='312' y2='312' stroke='#c9a24a' stroke-width='2'/><text x='52' y='338' fill='#f4efe3' font-family='Public Sans,sans-serif' font-size='18'>${esc(P.nm)}</text><text x='52' y='358' fill='#c9a24a' font-family='Public Sans,sans-serif' font-size='12' letter-spacing='1'>${esc(P.rl.toUpperCase())}</text>`;
+document.getElementById('pcard').innerHTML=g;
+document.getElementById('pnw').innerHTML=NW.map(function(n){return `<label class='row src'><span><b>${n.n}</b><small>${n.h}</small></span><input type='checkbox' data-nw='${n.id}' ${P.nw[n.id]?'checked':''}></label>`}).join('');
+document.getElementById('pnp').innerHTML=NP.map(function(n,i){return `<label class='row src'><span><b>${n}</b><small>Articolo di circa 300 parole</small></span><input type='checkbox' data-np='${i}' ${P.np[i]!==false?'checked':''}></label>`}).join('');
+var a=NW.filter(function(n){return P.nw[n.id]}).length,b=NP.filter(function(n,i){return P.np[i]!==false}).length;
+document.getElementById('psum').textContent='Pronti: '+a+' post sui social e '+b+' invii alle testate.';
+document.getElementById('pst').textContent=P.auth?('Autorizzato il '+P.auth+': in attesa del collegamento ai canali.'):'';
+}
+document.addEventListener('change',function(e){var t=e.target;if(t.dataset.nw){P.nw[t.dataset.nw]=t.checked;save();renderP()}if(t.dataset.np!=null){P.np[t.dataset.np]=t.checked;save();renderP()}});
+document.addEventListener('input',function(e){var id=e.target.id;if(id=='pti'||id=='pnm'||id=='prl'){P[id=='pti'?'ti':id=='pnm'?'nm':'rl']=e.target.value;save();renderP()}});
+document.getElementById('pgo').addEventListener('click',function(){var a=NW.filter(function(n){return P.nw[n.id]}).length,b=NP.filter(function(n,i){return P.np[i]!==false}).length;if(!a&&!b){document.getElementById('pst').textContent='Seleziona almeno un canale.';return}P.auth=new Date().toLocaleString('it-IT');save();renderP()});
+document.getElementById('pti').value=P.ti;document.getElementById('pnm').value=P.nm;document.getElementById('prl').value=P.rl;
+renderP();
+P.em=P.em||{};
+if(P.v!==4){P.v=4;P.tx=`Servizi di prossimità: è da qui che passa il futuro della montagna e di tutta la provincia.
+
+Dove i servizi si allontanano, un territorio perde residenti, giovani e opportunità. Dove restano vicini, le comunità hanno motivi per crescere.
+
+Per questo serve un’idea di Provincia che metta al centro i luoghi più fragili, con scelte condivise tra amministratori e cittadini.
+
+Il metodo è quello di sempre: ascolto, presenza sul territorio, collaborazione.
+
+Ora si prosegue, con la volontà di dare voce alle comunità della montagna e della pianura.
+
+#ProvinciaDiCuneo #Montagna #Territorio #Amministratori`;P.ar=`Servizi di prossimità: la condizione per restare, in montagna e in provincia
+
+Quando si parla di futuro del territorio si finisce quasi sempre nello stesso punto: i servizi. Sanità, scuola, trasporti, connessione. Sono questi, più di ogni slogan, a decidere se una famiglia resta, se un giovane torna, se un paese ha ancora una prospettiva.
+
+La provincia di Cuneo è forte e diversa. Ha una pianura produttiva e una montagna che custodisce paesaggio, comunità e identità. Ma le due realtà viaggiano a velocità diverse, e le aree interne rischiano di pagare il prezzo più alto. Tra il 2011 e il 2020 le Valli Maira e Grana sono passate da 13.689 a 13.209 residenti: un calo del 3,5%.
+
+Non si tratta di chiedere assistenza. Si tratta di garantire a chi vive in montagna gli stessi diritti di base di chi vive altrove: poter curarsi vicino a casa, avere una scuola raggiungibile, muoversi in sicurezza, essere connessi.
+
+Serve un metodo. Un confronto stabile tra comuni, Unioni montane, Provincia e azienda sanitaria. Decisioni prese guardando i dati e ascoltando chi amministra e chi abita i territori. Risorse spese dove incidono davvero.
+
+È l’idea di Provincia in cui crediamo: concreta, presente, vicina alle comunità. Un lavoro che si costruisce giorno dopo giorno, con ascolto e collaborazione.
+
+Il tema dei servizi di prossimità non riguarda una sola valle: riguarda tutta la Granda. È da qui che bisogna ripartire.
+
+${P.nm}, ${P.rl}
+
+Fonte dei dati: Strategia d’area Valli Grana e Maira, dati ISTAT 2011–2020.`}
+
+if(P.nw.fb==null)P.nw.fb=true;
+if(P.tx==null)P.tx=`Le Valli Maira e Grana contavano circa 13.700 abitanti nel 2011, oggi circa 13.200. Numeri piccoli, ma raccontano molto: molti paesi di alta valle perdono residenti, quelli di bassa valle crescono. Per scuole, sanità e trasporti serve decidere ora dove investire. Ne parliamo?`;
+if(P.ar==null)P.ar=`Valli Maira e Grana, i numeri che chiedono una scelta
+
+Tra il 2011 e il 2020 i diciotto comuni delle Valli Maira e Grana, inseriti nella Strategia nazionale per le aree interne, sono passati da 13.689 a 13.209 residenti: un calo del 3,5%. Letta da lontano, la cifra può sembrare contenuta. Letta da vicino, racconta due valli che camminano a velocità diverse.
+
+Nei paesi di alta valle la perdita è netta. Marmora è scesa da 74 a 53 abitanti, Macra da 52 a 46, Stroppo da 107 a 98. Sono numeri piccoli, ma dietro ogni unità c’è una famiglia, un bambino in meno a scuola, un negozio che rischia di chiudere. Nei comuni di bassa valle, più vicini a Cuneo, la popolazione invece cresce: Villar San Costanzo e Montemale hanno guadagnato residenti.
+
+Questo contrasto è il vero dato politico. Se lo spopolamento fosse uniforme basterebbe una risposta uniforme; così non è, e servono interventi diversi: servizi di prossimità e collegamenti dove si perde, abitazioni e lavoro dove si cresce, perché la crescita non diventi solo un dormitorio.
+
+I numeri vanno guardati insieme ai servizi: una pluriclasse, un ambulatorio con orari ridotti, una strada che una frana può chiudere. Sono questi i fattori che decidono se un giovane resta o se una famiglia sceglie di arrivare.
+
+Se la tendenza dell’ultimo decennio continuasse, le valli perderebbero circa 760 residenti entro il 2035 rispetto al 2020. Non è un destino, è uno scenario: dipende dalle scelte che si fanno adesso su scuola, sanità, trasporti e casa.
+
+Servono dati aggiornati, condivisi con i sindaci, e un patto tra comuni, Unioni montane e Provincia per usare le risorse dove incidono davvero. Le aree interne non chiedono assistenza: chiedono la possibilità di restare.
+
+${P.nm}, ${P.rl}
+
+Fonte dei dati: Strategia d’area Valli Grana e Maira, dati ISTAT 2011–2020.`;
+function wc(t){var m=t.trim().match(/\S+/g);return m?m.length:0}
+function msg(t){document.getElementById('pms').textContent=t}
+function cp(txt,el){var ok=function(){msg('Copiato.')},ko=function(){try{el.focus();el.select();document.execCommand('copy');msg('Copiato.')}catch(x){msg('Selezionato: copia a mano.')}};try{navigator.clipboard.writeText(txt).then(ok,ko)}catch(x){ko()}}
+var DL=null;
+function sv(name,data){if(!DL){try{var bl=(typeof Blob!=='undefined'&&data instanceof Blob)?data:new Blob([data],{type:'text/plain;charset=utf-8'});var uu=URL.createObjectURL(bl);var aa=document.createElement('a');aa.href=uu;aa.download=name;document.body.appendChild(aa);aa.click();aa.remove();setTimeout(function(){URL.revokeObjectURL(uu)},4000);msg('Salvato.')}catch(e){msg('Salvataggio non riuscito: usa Copia.')}return}DL.save({filename:name,data:data}).then(function(){msg('Salvato.')},function(e){msg(e&&e.code=='declined'?'Salvataggio annullato.':'Salvataggio non riuscito: usa Copia.')})}
+if(window.claude&&claude.use){claude.use('downloads').then(function(d){DL=d;if(!d){['psvi','psva'].forEach(function(i){document.getElementById(i).hidden=true})}}).catch(function(){})}
+document.getElementById('ptx').value=P.tx;
+document.getElementById('par').value=P.ar;
+document.getElementById('pwc').textContent=wc(P.ar)+' parole';
+document.getElementById('pem').innerHTML=NP.map(function(n,i){return `<span class='meta' style='display:block;margin-top:8px'>${n}</span><input class='f' type='email' data-em='${i}' value='${esc(P.em[i]||'').replace(/'/g,'&#39;')}' placeholder='Indirizzo della redazione' aria-label='Email ${n}'>`}).join('');
+document.addEventListener('input',function(e){var t=e.target;if(t.id=='ptx'){P.tx=t.value;save()}if(t.id=='par'){P.ar=t.value;save();document.getElementById('pwc').textContent=wc(t.value)+' parole'}if(t.dataset.em!=null){P.em[t.dataset.em]=t.value;save()}});
+document.getElementById('pcpt').addEventListener('click',function(){cp(document.getElementById('ptx').value,document.getElementById('ptx'))});
+document.getElementById('pcpa').addEventListener('click',function(){cp(document.getElementById('par').value,document.getElementById('par'))});
+document.getElementById('psva').addEventListener('click',function(){sv('articolo.txt',document.getElementById('par').value)});
+document.getElementById('pcpe').addEventListener('click',function(){var a=NP.map(function(n,i){return P.np[i]!==false&&P.em[i]?P.em[i].trim():''}).filter(Boolean).join(', ');var el=document.getElementById('pad');el.value=a;if(!a){msg('Inserisci prima gli indirizzi delle testate selezionate.');return}cp(a,el)});
+document.getElementById('psvi').addEventListener('click',function(){var svg=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' width='1080' height='1080'>`+document.getElementById('pcard').innerHTML+'</svg>';var im=new Image();im.onload=function(){var c=document.createElement('canvas');c.width=1080;c.height=1080;c.getContext('2d').drawImage(im,0,0,1080,1080);c.toBlob(function(b){if(b)sv('post-facebook.png',b);else msg('Immagine non generata.')},'image/png')};im.onerror=function(){msg('Immagine non generata.')};im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)});
+renderP();
+var RS=null;
+function renderRass(o){
+if(o)RS=o.rassegna||RS;
+var el=document.getElementById('rsl');if(!el||!RS||!RS.length)return;
+var q=(document.getElementById('rsq').value||'').toLowerCase().trim();
+var h='';
+RS.forEach(function(f){
+var a=f.articoli.filter(function(x){return !q||x.titolo.toLowerCase().indexOf(q)>-1});
+if(!a.length)return;
+h+='<h2>'+esc(f.fonte)+'</h2>'+a.map(function(x){var ok=/^https?:/.test(x.link||'');return `<div class='row${x.montagna?' gap':''}'>${ok?`<a href='${esc(x.link).replace(/'/g,'&#39;')}' target='_blank' rel='noopener' style='color:var(--ink);font-weight:600;text-decoration:none'>${esc(x.titolo)}</a>`:esc(x.titolo)}</div>`}).join('');
+});
+el.innerHTML=h||`<div class='row'>Nessun titolo corrisponde.</div>`;
+}
+document.getElementById('rsq').addEventListener('input',function(){renderRass(null)});
+function importBrief(o){
+if(!o||!o.temi_caldi)throw new Error('formato');
+D.hot=o.temi_caldi.map(function(x){return {t:x.titolo,s:x.attenzione,d:x.nota||''}});
+D.gaps=(o.lacune||[]).map(function(x){return {t:x.titolo,n:x.nota||''}});
+D.drafts=[];
+(o.bozze||[]).forEach(function(b,i){var rb=b.rubrica?b.rubrica+': ':'';D.drafts.push({id:'p'+i,k:rb+'Post Facebook: '+b.tema,x:b.post_facebook},{id:'a'+i,k:rb+'Articolo: '+b.tema,x:b.articolo});if(b.scheda){D.drafts.push({id:'s'+i,k:'Scheda: '+b.tema,x:b.scheda})}});
+S.st={};S.tx={};
+var b0=(o.bozze||[])[0];
+if(b0){P.tx=b0.post_facebook;P.ar=b0.articolo;P.ti=b0.titolo_immagine;document.getElementById('ptx').value=P.tx;document.getElementById('par').value=P.ar;document.getElementById('pti').value=P.ti;document.getElementById('pwc').textContent=wc(P.ar)+' parole'}
+S.brief=o;save();render();renderP();
+var te=document.getElementById('ter');if(te&&o.dal_territorio&&o.dal_territorio.length){te.innerHTML=o.dal_territorio.map(function(x){return `<div class='row gap'><b>${esc(x.titolo)}</b><small>${esc(x.sintesi||'')}</small><div class='meta'><span>${x.note||0} note${x.collegato?' · legato a: '+esc(x.collegato):''}</span></div></div>`}).join('')}
+var nt=document.querySelector('main > .note');if(nt)nt.hidden=true;
+document.getElementById('fbm').textContent='Brief del '+(o.generato||'')+' caricato.'+(o.rubrica?' Rubrica di oggi: '+o.rubrica+'.':'');
+renderRass(o);
+}
+document.getElementById('fbr').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{importBrief(JSON.parse(r.result))}catch(x){document.getElementById('fbm').textContent='File non valido.'}};r.readAsText(f)});
+document.getElementById('fbb').addEventListener('click',function(){var t=document.getElementById('fbp');try{importBrief(JSON.parse(t.value.trim()));t.value=''}catch(x){document.getElementById('fbm').textContent='Testo non valido: copia tutto il contenuto del file, dalla prima all’ultima parentesi graffa.'}});
+if(S.brief){try{importBrief(S.brief)}catch(x){}}
+drawF();
+document.getElementById('fc2').innerHTML=[{l:'Marmora',v:-21.6},{l:'Stroppo',v:-6.5},{l:'Macra',v:-5.8},{l:'Monterosso',v:-4.9},{l:'Valgrana',v:-4.7},{l:'Villar S.C.',v:2.5},{l:'Montemale',v:4.6}].map(function(i){return `<div class='br'><span>${i.l}</span><div class='bar'><i class='${i.v<0?'neg':'pos'}' style='width:${Math.max(2,Math.abs(i.v)/25*100)}%'></i></div><b>${sg(i.v,1)}%</b></div>`}).join('');
+
+function b64(t){var b=atob(t),a=new Uint8Array(b.length);for(var i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return a}
+async function decBrief(enc,pw){
+var km=await crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']);
+var key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(enc.salt),iterations:enc.iter||200000,hash:'SHA-256'},km,{name:'AES-GCM',length:256},false,['decrypt']);
+var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(enc.iv)},key,b64(enc.data));
+return JSON.parse(new TextDecoder().decode(pt));
+}
+async function autoLoad(){
+var m=document.getElementById('fbm');
+var pw=document.getElementById('fpw').value;
+if(!pw){try{pw=localStorage.getItem('pwb')||''}catch(e){pw=''}}
+if(!pw){m.textContent='Inserisci la password del brief.';return}
+try{
+var r=await fetch('brief.enc?'+Date.now(),{cache:'no-store'});
+if(!r.ok)throw new Error('http');
+var o=await decBrief(await r.json(),pw);
+try{localStorage.setItem('pwb',pw)}catch(e){}
+document.getElementById('fpw').value='';
+importBrief(o);
+}catch(e){m.textContent='Non riesco a leggere il brief: controlla la password o riprova tra poco.'}
+}
+document.getElementById('fau').addEventListener('click',autoLoad);
+if(location.protocol.indexOf('http')===0)autoLoad();
+</script>
+</body>
+</html>
