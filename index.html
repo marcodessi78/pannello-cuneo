@@ -371,19 +371,25 @@ var key=await crypto.subtle.deriveKey({name:'PBKDF2',salt:b64(enc.salt),iteratio
 var pt=await crypto.subtle.decrypt({name:'AES-GCM',iv:b64(enc.iv)},key,b64(enc.data));
 return JSON.parse(new TextDecoder().decode(pt));
 }
+function getPw(){var p='';try{p=localStorage.getItem('pwb')||''}catch(e){}
+if(!p){var m=document.cookie.match(/(?:^|; )pwb=([^;]*)/);if(m){try{p=decodeURIComponent(m[1])}catch(e){}}}
+return p}
+function setPw(p){var ok=false;try{localStorage.setItem('pwb',p);ok=localStorage.getItem('pwb')===p}catch(e){}
+try{document.cookie='pwb='+encodeURIComponent(p)+'; max-age=31536000; path=/; SameSite=Strict; Secure';ok=ok||document.cookie.indexOf('pwb=')>-1}catch(e){}
+return ok}
 async function autoLoad(){
 var m=document.getElementById('fbm');
-var pw=document.getElementById('fpw').value;
-if(!pw){try{pw=localStorage.getItem('pwb')||''}catch(e){pw=''}}
-if(!pw){m.textContent='Inserisci la password del brief.';return}
-try{
-var r=await fetch('brief.enc?'+Date.now(),{cache:'no-store'});
-if(!r.ok)throw new Error('http');
-var o=await decBrief(await r.json(),pw);
-try{localStorage.setItem('pwb',pw)}catch(e){}
+var pw=document.getElementById('fpw').value||getPw();
+if(!pw){m.textContent='Password non salvata su questo dispositivo: scrivila e tocca Aggiorna dal sito.';return}
+var r;
+try{r=await fetch('brief.enc?'+Date.now(),{cache:'no-store'})}catch(e){m.textContent='Nessuna connessione: riprova tra poco.';return}
+if(!r.ok){m.textContent='Brief non trovato sul sito (errore '+r.status+').';return}
+var o;
+try{o=await decBrief(await r.json(),pw)}catch(e){m.textContent='Password errata o file illeggibile: riscrivila e tocca Aggiorna dal sito.';return}
+var saved=setPw(pw);
 document.getElementById('fpw').value='';
 importBrief(o);
-}catch(e){m.textContent='Non riesco a leggere il brief: controlla la password o riprova tra poco.'}
+document.getElementById('fbm').textContent+=saved?' Password ricordata su questo dispositivo.':' Attenzione: il telefono non ricorda la password.';
 }
 document.getElementById('fau').addEventListener('click',autoLoad);
 if(location.protocol.indexOf('http')===0)autoLoad();
